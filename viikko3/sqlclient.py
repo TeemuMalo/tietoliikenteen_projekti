@@ -1,11 +1,10 @@
 import mysql.connector
-import login as log
 
 mydb = mysql.connector.connect(
-  host=log.HOST_IP,
-  database=log.DATABASENAME,
-  user=log.USERNAME,
-  password=log.PASSWORD
+  host="172.20.241.9",
+  database="measurements",
+  user="dbaccess_ro",
+  password="vsdjkvwselkvwe234wv234vsdfas"
 )
 
 mycursor = mydb.cursor()
@@ -17,5 +16,5 @@ myresult = mycursor.fetchall()
 for x in myresult:
   print(x)
 
-with open('C:/Koulu (Tietotekniikka)/anturidataa/dataa3.csv', 'w') as f:
+with open('C:/Koulu (Tietotekniikka)/anturidataa/dataa2.csv', 'w') as f:
   f.write(myresult)
