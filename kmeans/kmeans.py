@@ -1,16 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import sklearn
-
-
 
 def rivit(data):
     numberOfRows = len(data)
     numberOfRows = int(numberOfRows)
     return numberOfRows
-
-
 
 def dataprocess(numberOfRows,data):
     datamatrix = np.zeros((numberOfRows,3))
@@ -18,7 +13,6 @@ def dataprocess(numberOfRows,data):
     datamatrix[:,1] = data.values[0::,6]
     datamatrix[:,2] = data.values[0::,7]
     print(datamatrix)
-    
     return datamatrix
 
 def randomdata():
@@ -62,19 +56,30 @@ def kmeans(numberOfRows, random, datamatrix):
     for i in range(6):
         ax.scatter(avgDistance[:,0],avgDistance[:,1],avgDistance[:,2],marker='*', color='red', s=200)
 
-
-
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
     
     plt.show()
 
+    headerData = avgDistance
 
-                
-        
-        
-        
+    with open('keskipisteet.h', 'w') as f:
+        line = "float w[3][6] = {"
+        for i in range(5):
+            line = line + "{"
+            outputThis = np.array2string(headerData[i,:],precision=2,separator=',')
+            line = line + outputThis[1:len(outputThis)-1]
+            line = line + "},"
+        outputThis = np.array2string(headerData[5,:],precision=3,separator=',')
+        line = line + "{"
+        line = line + outputThis[1:len(outputThis)-1]
+        line = line + "}"
+        line = line + "};"
+        f.write(line)
+        f.write('\n')
+    f.close()
+
 
 
 if __name__ == "__main__":
