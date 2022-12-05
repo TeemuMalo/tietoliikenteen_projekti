@@ -1,6 +1,6 @@
 #include "messaging.h"
 #include "accelerator.h"
-
+#include "keskipisteet.h"
 
 // 1 = X + ylös
 // 2 = X - alas
@@ -69,7 +69,7 @@ void loop()
   
  
 
-  for (int M = 0; M < NumberOfMeasurements; M++)
+  for (int M = 0; M < NumberOfMeasurements;)
   {
     
     Aobject.makeMeasurement();
@@ -78,27 +78,37 @@ void loop()
     uint8_t id = M;
     uint8_t flags = RotationDirection;
     Mobject.createMessage(m);
-    if (Mobject.sendMessage(id, flags))
+    int j;
+    int i;
+    float value;
+    
+    
+    for(int j = 0; j < 6;)
     {
-      Serial.println("Successfull transmission");
-     
+              float value = abs(sqrt(pow((w[j][0]- m.x),2) + 
+                               pow((w[j][1]- m.y),2) + 
+                               pow((w[j][2]- m.z),2)));
+           Serial.println(value);
+           j++;
+    
+   
+    
+    if (value < 50)
+    {
+      Serial.print("  ");
+      Serial.print("arduinon suunta =");
+      Serial.println(w[j][3]);
+      delay(420);
     }
-    else
-    {
-      Serial.println("Transmission fails");
-      Serial.println("Successfull transmission");
+
+
       
     }
-    if (Mobject.receiveACK())
-    {
-      Serial.println("Receiver got message, going to next measurement");
+    
+
       
-    }
-    else
-    {
-      Serial.println("Receiver did not get the message. Need to resend it");
       
-      M--;  // Let's just rewind for loop
-    }
+      M++;  // Let's just rewind for loop
+    
   } // end of for
 }   // end of loop
