@@ -80,7 +80,10 @@ void loop()
     Mobject.createMessage(m);
     int j;
     int i;
+    int location;
+    float minvalue = 500;
     float value;
+
     
     
     for(int j = 0; j < 6;)
@@ -88,19 +91,18 @@ void loop()
               float value = abs(sqrt(pow((w[j][0]- m.x),2) + 
                                pow((w[j][1]- m.y),2) + 
                                pow((w[j][2]- m.z),2)));
-           Serial.println(value);
-           j++;
+           //Serial.println(value);
+           
     
    
     
-    if (value < 50)
+    if (value < minvalue)
     {
-      Serial.print("  ");
-      Serial.print("arduinon suunta =");
-      Serial.println(w[j][3]);
-      delay(420);
+      minvalue = value;
+      location = w[j][3];
+      
     }
-
+    j++;
 
       
     }
@@ -108,7 +110,10 @@ void loop()
 
       
       
-      M++;  // Let's just rewind for loop
     
+    Serial.print(RotationDirection);
+    Serial.print(',');
+    Serial.println(location);
+    M++;
   } // end of for
 }   // end of loop

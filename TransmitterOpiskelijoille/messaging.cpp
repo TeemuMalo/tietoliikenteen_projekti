@@ -4,7 +4,7 @@
 
 Messaging::Messaging()
 {
-  Serial.println("messaging created!");
+ // Serial.println("messaging created!");
   pmanager = new RHReliableDatagram(driver, TRANSMITTER_ADDRESS);
  
   if (!pmanager->init())
