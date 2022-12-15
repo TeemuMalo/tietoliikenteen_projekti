@@ -2,7 +2,7 @@
 
 Arkkitehtuurikaavio
 
-![image](https://user-images.githubusercontent.com/101553328/205619075-83829caf-2725-4e50-a9b4-324ec5075aaf.png)
+![image](https://user-images.githubusercontent.com/101553328/207847133-e5f58b98-f004-4951-8ffd-2fca8543ff56.png)
 
 
 Python K-means harjoitustehtävä
