@@ -4,7 +4,7 @@
 
 Messaging::Messaging()
 {
-  Serial.println("messaging created!");
+ // Serial.println("messaging created!");
   pmanager = new RHReliableDatagram(driver, TRANSMITTER_ADDRESS);
  
   if (!pmanager->init())
@@ -14,26 +14,27 @@ Messaging::Messaging()
 
 Messaging::~Messaging()
 {
-  Serial.println("Messaging deleted!");
+  //Serial.println("Messaging deleted!");
   delete pmanager;
 }
 void Messaging::createMessage(Measurement m)
 {
- data[0] = (m.x>>8); //high
- data[1] = (m.x & 0x00ff); //low
- data[2] = (m.y>>8); //high
- data[3] = (m.y & 0x00ff);//low
- data[4] = (m.z>>8); //high
- data[5] = (m.z & 0x00ff); //low
-
-  Serial.println(data[0]);
-  Serial.println(data[1]);
-  Serial.println(data[2]);
-  Serial.println(data[3]);
-  Serial.println(data[4]);
-  Serial.println(data[5]);
-
+  Data[0] = (m.x>>8);
+  Data[1] = (m.x & 0x00ff);
+  Data[2] = (m.y>>8);
+  Data[3] = (m.y & 0x00ff);
+  Data[4] = (m.z>>8);
+  Data[5] = (m.z & 0x00ff);
+  
+  //Serial.println(Data[0]);
+  //Serial.println(Data[1]);
+  //Serial.println(Data[2]);
+  //Serial.println(Data[3]);
+  //Serial.println(Data[4]);
+  //Serial.println(Data[5]);
 }
+
+
 bool Messaging::sendMessage(uint8_t id, uint8_t flags)
 {
      unsigned long start = millis(); 
@@ -44,7 +45,7 @@ bool Messaging::sendMessage(uint8_t id, uint8_t flags)
      }
      driver.setModeTx();
      uint8_t to = RECEIVER_ADDRESS;
-     uint8_t from = TRANSMITTER_ADDRESS;  //TRANSMITTER_ADDRESS;
+     uint8_t from = TRANSMITTER_ADDRESS;
      
      pmanager->setHeaderTo(to);
      pmanager->setHeaderFrom(from);
@@ -53,7 +54,7 @@ bool Messaging::sendMessage(uint8_t id, uint8_t flags)
      
      bool returnValue = false;
   
-     if (pmanager->sendto(data, messageLength, RECEIVER_ADDRESS))
+     if (pmanager->sendto(Data, messageLength, RECEIVER_ADDRESS))
      {
         returnValue = true;
      }
@@ -63,18 +64,20 @@ bool Messaging::sendMessage(uint8_t id, uint8_t flags)
 }
 bool Messaging::receiveACK()
 {
+    
     driver.setModeRx();
     unsigned long start = millis(); 
     unsigned long timeout = millis()-start;
     bool receiverResult = false;
-    uint8_t to;
-    uint8_t from;
+    uint8_t to; // = RECEIVER_ADDRESS;
+    uint8_t from; // = TRANSMITTER_ADDRESS;
     uint8_t len;
     uint8_t id;
     uint8_t flags;
     while((timeout<1500) && (!pmanager->available()))
     {
-      timeout = millis()-start;       
+      timeout = millis()-start;    
+      
     }
 
     // Jos while luupista päästään, niin on saatu ACK tai on kulunut 1s

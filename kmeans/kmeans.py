@@ -12,19 +12,26 @@ def dataprocess(numberOfRows,data):
     datamatrix[:,0] = data.values[0::,5]
     datamatrix[:,1] = data.values[0::,6]
     datamatrix[:,2] = data.values[0::,7]
+    position = data.values[0::,9]
     print(datamatrix)
+<<<<<<< HEAD
     return datamatrix
+=======
+    return datamatrix, position
+>>>>>>> 602d4522ddc23bcae61e105a76866d3e85f2d60c
 
 def randomdata():
     random = np.random.randint(min, max, size=(6,3))
     return random
 
-def kmeans(numberOfRows, random, datamatrix):
+def kmeans(numberOfRows, random, datamatrix,position):
     for z in range (10):
+        flag = np.zeros(6)
         counts = np.zeros(6)
         avgDistance = np.zeros((6,3))
         dist1 = np.zeros(6)
         centerPointCumulativeSum = np.zeros((6,3))
+        
 
         for i in range(numberOfRows):
             for j in range(6):
@@ -32,9 +39,11 @@ def kmeans(numberOfRows, random, datamatrix):
                                np.power((random[j,1]- datamatrix[i,1]),2) + 
                                np.power((random[j,2]- datamatrix[i,2]),2)))
                 dist1[j] = dist
-            p = np.argmin(dist1) 
+            p = np.argmin(dist1)
+            flag[p] = position[i]
             counts[p] += 1
             centerPointCumulativeSum[p,0:3] += datamatrix[i,0:3]
+            
 
         for a in range(6):
             if (counts[a]==0):
@@ -46,6 +55,7 @@ def kmeans(numberOfRows, random, datamatrix):
 
         random = avgDistance
         print(avgDistance, "\n")
+        
 
 
 
@@ -60,20 +70,33 @@ def kmeans(numberOfRows, random, datamatrix):
     ax.set_ylabel('y')
     ax.set_zlabel('z')
     
-    plt.show()
+    #plt.show()
 
     headerData = avgDistance
 
+<<<<<<< HEAD
     with open('keskipisteet.h', 'w') as f:
         line = "float w[3][6] = {"
+=======
+    with open('C:/git repot/tietoliikenteen_projekti/TransmitterOpiskelijoille/keskipisteet.h', 'w') as f:
+        line = "float w[6][6] = {"
+>>>>>>> 602d4522ddc23bcae61e105a76866d3e85f2d60c
         for i in range(5):
             line = line + "{"
             outputThis = np.array2string(headerData[i,:],precision=2,separator=',')
             line = line + outputThis[1:len(outputThis)-1]
+<<<<<<< HEAD
+=======
+            line = line + "," + str(int(flag[i]))
+>>>>>>> 602d4522ddc23bcae61e105a76866d3e85f2d60c
             line = line + "},"
         outputThis = np.array2string(headerData[5,:],precision=3,separator=',')
         line = line + "{"
         line = line + outputThis[1:len(outputThis)-1]
+<<<<<<< HEAD
+=======
+        line = line + "," + str(int(flag[5]))
+>>>>>>> 602d4522ddc23bcae61e105a76866d3e85f2d60c
         line = line + "}"
         line = line + "};"
         f.write(line)
@@ -93,13 +116,13 @@ if __name__ == "__main__":
 
     min = np.min(data.values[0::,5:7])
     max = np.max(data.values[0::,5:7])
-    print(min, max)
+    #print(min, max)
     
     
     numberOfRows = rivit(data)
     random = randomdata()
-    datamatrix = dataprocess(numberOfRows, data)
-    kmeans(numberOfRows, random, datamatrix)
+    datamatrix, position = dataprocess(numberOfRows, data)
+    kmeans(numberOfRows, random, datamatrix, position)
 
 
 

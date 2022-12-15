@@ -23,10 +23,11 @@ public:
 
 
 private:
+  
   const uint8_t TRANSMITTER_ADDRESS = 82;
-  const uint8_t RECEIVER_ADDRESS = 2 54;
+  const uint8_t RECEIVER_ADDRESS = 254;
   uint8_t buf[RH_ASK_MAX_MESSAGE_LEN];
-  uint8_t data[RH_ASK_MAX_MESSAGE_LEN];
+  uint8_t Data[RH_ASK_MAX_MESSAGE_LEN];
   uint8_t messageLength = 6;
   RH_ASK driver;
   RHReliableDatagram * pmanager;
