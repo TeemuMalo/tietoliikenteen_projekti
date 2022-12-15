@@ -14,11 +14,7 @@ def dataprocess(numberOfRows,data):
     datamatrix[:,2] = data.values[0::,7]
     position = data.values[0::,9]
     print(datamatrix)
-<<<<<<< HEAD
-    return datamatrix
-=======
     return datamatrix, position
->>>>>>> 602d4522ddc23bcae61e105a76866d3e85f2d60c
 
 def randomdata():
     random = np.random.randint(min, max, size=(6,3))
@@ -74,29 +70,18 @@ def kmeans(numberOfRows, random, datamatrix,position):
 
     headerData = avgDistance
 
-<<<<<<< HEAD
-    with open('keskipisteet.h', 'w') as f:
-        line = "float w[3][6] = {"
-=======
     with open('C:/git repot/tietoliikenteen_projekti/TransmitterOpiskelijoille/keskipisteet.h', 'w') as f:
         line = "float w[6][6] = {"
->>>>>>> 602d4522ddc23bcae61e105a76866d3e85f2d60c
         for i in range(5):
             line = line + "{"
             outputThis = np.array2string(headerData[i,:],precision=2,separator=',')
             line = line + outputThis[1:len(outputThis)-1]
-<<<<<<< HEAD
-=======
             line = line + "," + str(int(flag[i]))
->>>>>>> 602d4522ddc23bcae61e105a76866d3e85f2d60c
             line = line + "},"
         outputThis = np.array2string(headerData[5,:],precision=3,separator=',')
         line = line + "{"
         line = line + outputThis[1:len(outputThis)-1]
-<<<<<<< HEAD
-=======
         line = line + "," + str(int(flag[5]))
->>>>>>> 602d4522ddc23bcae61e105a76866d3e85f2d60c
         line = line + "}"
         line = line + "};"
         f.write(line)
